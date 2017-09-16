@@ -826,7 +826,7 @@ class Backend(Database):
         return g.db.users.find(query.where)
 
     def get_user_by_email(self, email):
-        query = {"email": email}
+        query = {'$or': [{"email": email}, {"login": email}]}
         return g.db.users.find_one(query)
 
     def get_user_by_hash(self, hash):

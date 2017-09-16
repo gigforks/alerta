@@ -3,9 +3,9 @@ from datetime import datetime
 from uuid import uuid4
 
 from flask import current_app
-from werkzeug.security import generate_password_hash, check_password_hash
 
 from alerta.app import db
+from alerta.app.auth.utils import generate_password_hash, check_password_hash
 from alerta.app.utils.api import absolute_url
 
 
