@@ -41,12 +41,12 @@ def create_token(user_id, name, login, provider, customer, orgs=None, groups=Non
         jti=str(uuid4()),
         name=name,
         login=login,
-        email=email,
         orgs=orgs,
         roles=roles,
         groups=groups,
         provider=provider,
         scopes=scopes,
+        email=email,
         email_verified=email_verified,
         customer=customer
     )

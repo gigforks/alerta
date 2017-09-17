@@ -52,6 +52,7 @@ class User(object):
             'name': self.name,
             'email': self.email,
             'domain': self.domain,
+            'provider': 'basic',  # legacy field
             'role': self.role,
             'createTime': self.create_time,
             'lastLogin': self.last_login,

@@ -1,4 +1,4 @@
-
+from collections import namedtuple
 from datetime import datetime, timedelta
 
 import psycopg2
@@ -277,7 +277,26 @@ class Backend(Database):
                 receive_time, last_receive_id, last_receive_time, history, h.* from alerts, unnest(history) h
              WHERE {where}
         """.format(where=query.where)
-        return self._fetchall(select, query.vars, limit=page_size, offset=(page - 1) * page_size)
+        Record = namedtuple("Record")
+        return [
+            Record(
+                id=h.id,
+                resource=h.resource,
+                event=h.event,
+                environment=h.environment,
+                severity=h.severity,
+                service=h.service,
+                group=h.group,
+                value=h.value,
+                text=h.text,
+                tags=h.tags,
+                attributes=h.attributes,
+                origin=h.origin,
+                update_time=h.update_time,
+                type=h.change_type,
+                customer=h.customer
+            ) for h in self._fetchall(select, query.vars, limit=page_size, offset=(page - 1) * page_size)
+        ]
 
     #### COUNTS
 
