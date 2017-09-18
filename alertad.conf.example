@@ -12,3 +12,4 @@ ALLOWED_ENVIRONMENTS=['Production', 'Development', 'Code']
 DEBUG=True
 FLASK_API_URL="http://localhost:5000/alerts"
 ITSYOUONLINE_CLIENT_SECRET ="jSeT43WRv-kb0oJdsmRSguCDMsZwHG0TBxX53RYKflFYODNVYJvn"
+ADMIN_USERS=['ashraf']
