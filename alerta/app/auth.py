@@ -62,7 +62,7 @@ def verify_api_key(key):
     return key_info
 
 
-def create_token(user, name, login, provider, customer, scopes):
+def create_token(user, name, login, provider, customer=None, scopes=None):
     payload = {
         'iss': request.url_root,
         'sub': user,
@@ -318,6 +318,30 @@ def verify_email(hash):
     else:
         return render_template('auth/verify_failed.html')
 
+@app.route('/auth/itsyouonline', methods=['OPTIONS', 'POST'])
+@cross_origin(supports_credentials=True)
+def itsyouonline():
+    access_token_url = "https://itsyou.online/v1/oauth/access_token"
+    payload = {
+        'client_id': request.json['clientId'],
+        'client_secret': app.config['OAUTH2_CLIENT_SECRET'],
+        'redirect_uri': request.json['redirectUri'],
+        'grant_type': 'authorization_code',
+        'code': request.json['code'],
+        'state': request.json['state'],
+    }
+    try:
+        r = requests.post(access_token_url, data=payload)
+    except Exception:
+        return jsonify(status="error", message="Failed to call ITSYOUONLINE API over HTTPS")
+    resp = r.json()
+    if not resp['scope']:
+        return jsonify(status="error", message="You should be a member of  %s" % request.json['clientId']), 403
+    username = resp['info']['username']
+    access_token = resp['access_token']
+
+    token = create_token(username, username , username, provider='itsyouonline', scopes=scopes(username, groups=['admin']))
+    return jsonify(token=token)
 
 @app.route('/auth/google', methods=['OPTIONS', 'POST'])
 @cross_origin(supports_credentials=True)
@@ -327,7 +351,7 @@ def google():
 
     payload = {
         'client_id': request.json['clientId'],
-        'client_secret': app.config['OAUTH2_CLIENT_SECRET'],
+        'client_secret': app.config['ITSYOUONLINE_CLIENT_SECRET'],
         'redirect_uri': request.json['redirectUri'],
         'grant_type': 'authorization_code',
         'code': request.json['code'],

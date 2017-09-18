@@ -1,0 +1,14 @@
+SECRET_KEY='f7v%@!(TNBl=DQE4Iag)Hh9G_t40@HTJ'
+SEVERITY_MAP = {
+    'critical': 1,
+    'warning': 4,
+    'indeterminate': 5,
+    'ok': 5,
+    'unknown': 9,
+}
+AUTH_REQUIRED = True
+PLUGINS=['gig']
+ALLOWED_ENVIRONMENTS=['Production', 'Development', 'Code']
+DEBUG=True
+FLASK_API_URL="http://localhost:5000/alerts"
+ITSYOUONLINE_CLIENT_SECRET ="jSeT43WRv-kb0oJdsmRSguCDMsZwHG0TBxX53RYKflFYODNVYJvn"
