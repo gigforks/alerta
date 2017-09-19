@@ -324,7 +324,7 @@ def itsyouonline():
     access_token_url = "https://itsyou.online/v1/oauth/access_token"
     payload = {
         'client_id': request.json['clientId'],
-        'client_secret': app.config['OAUTH2_CLIENT_SECRET'],
+        'client_secret': app.config['ITSYOUONLINE_CLIENT_SECRET'],
         'redirect_uri': request.json['redirectUri'],
         'grant_type': 'authorization_code',
         'code': request.json['code'],
