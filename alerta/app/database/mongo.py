@@ -339,7 +339,7 @@ class Database(object):
             {
                 '$match': {
                     "history.updateTime": {'$gt': datetime.datetime.utcnow() - datetime.timedelta(seconds=window)},
-                    "history.type": "severity"
+                    "history.type": "status"
                 }
             },
             {
